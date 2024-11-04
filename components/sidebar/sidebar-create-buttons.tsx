@@ -5,7 +5,7 @@ import { ContentType } from "@/types"
 import { IconFolderPlus, IconPlus } from "@tabler/icons-react"
 import { FC, useContext, useState } from "react"
 import { Button } from "../ui/button"
-import { CreateAssistant } from "./items/assistants/create-assistant"
+// import { CreateAssistant } from "./items/assistants/create-assistant"
 import { CreateCollection } from "./items/collections/create-collection"
 import { CreateFile } from "./items/files/create-file"
 import { CreateModel } from "./items/models/create-model"
@@ -30,7 +30,7 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
   const [isCreatingPreset, setIsCreatingPreset] = useState(false)
   const [isCreatingFile, setIsCreatingFile] = useState(false)
   const [isCreatingCollection, setIsCreatingCollection] = useState(false)
-  const [isCreatingAssistant, setIsCreatingAssistant] = useState(false)
+  // const [isCreatingAssistant, setIsCreatingAssistant] = useState(false)
   const [isCreatingTool, setIsCreatingTool] = useState(false)
   const [isCreatingModel, setIsCreatingModel] = useState(false)
 
@@ -49,6 +49,7 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
   }
 
   const getCreateFunction = () => {
+
     switch (contentType) {
       case "chats":
         return async () => {
@@ -75,10 +76,10 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
           setIsCreatingCollection(true)
         }
 
-      case "assistants":
-        return async () => {
-          setIsCreatingAssistant(true)
-        }
+      // case "assistants":
+      //   return async () => {
+      //     setIsCreatingAssistant(true)
+      //   }
 
       case "tools":
         return async () => {
@@ -135,12 +136,12 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
         />
       )}
 
-      {isCreatingAssistant && (
+      {/* {isCreatingAssistant && (
         <CreateAssistant
           isOpen={isCreatingAssistant}
           onOpenChange={setIsCreatingAssistant}
         />
-      )}
+      )} */}
 
       {isCreatingTool && (
         <CreateTool isOpen={isCreatingTool} onOpenChange={setIsCreatingTool} />

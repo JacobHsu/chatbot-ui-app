@@ -21,7 +21,7 @@ export const Sidebar: FC<SidebarProps> = ({ contentType, showSidebar }) => {
     prompts,
     files,
     collections,
-    assistants,
+    // assistants,
     tools,
     models
   } = useContext(ChatbotUIContext)
@@ -88,12 +88,12 @@ export const Sidebar: FC<SidebarProps> = ({ contentType, showSidebar }) => {
                 collectionFolders
               )
 
-            case "assistants":
-              return renderSidebarContent(
-                "assistants",
-                assistants,
-                assistantFolders
-              )
+            // case "assistants":
+            //   return renderSidebarContent(
+            //     "assistants",
+            //     assistants,
+            //     assistantFolders
+            //   )
 
             case "tools":
               return renderSidebarContent("tools", tools, toolFolders)
