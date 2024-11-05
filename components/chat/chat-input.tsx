@@ -40,7 +40,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     chatMessages,
     isGenerating,
     selectedPreset,
-    selectedAssistant,
     focusPrompt,
     setFocusPrompt,
     focusFile,
@@ -54,7 +53,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     chatSettings,
     selectedTools,
     setSelectedTools,
-    assistantImages
   } = useContext(ChatbotUIContext)
 
   const {
@@ -79,7 +77,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
     setTimeout(() => {
       handleFocusChatInput()
     }, 200) // FIX: hacky
-  }, [selectedPreset, selectedAssistant])
+  }, [selectedPreset])
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (!isTyping && event.key === "Enter" && !event.shiftKey) {
@@ -188,27 +186,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
             </div>
           ))}
 
-        {selectedAssistant && (
-          <div className="border-primary mx-auto flex w-fit items-center space-x-2 rounded-lg border p-1.5">
-            {selectedAssistant.image_path && (
-              <Image
-                className="rounded"
-                src={
-                  assistantImages.find(
-                    img => img.path === selectedAssistant.image_path
-                  )?.base64
-                }
-                width={28}
-                height={28}
-                alt={selectedAssistant.name}
-              />
-            )}
-
-            <div className="text-sm font-bold">
-              Talking to {selectedAssistant.name}
-            </div>
-          </div>
-        )}
       </div>
 
       <div className="border-input relative mt-3 flex min-h-[60px] w-full items-center justify-center rounded-xl border-2">

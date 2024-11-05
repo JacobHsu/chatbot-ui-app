@@ -112,8 +112,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     setCollections,
     setAssistants,
     setTools,
-    setModels,
-    setAssistantImages
+    setModels
   } = useContext(ChatbotUIContext)
 
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -511,23 +510,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
           image_path: filePath
         })
 
-        const url = (await getAssistantImageFromStorage(filePath)) || ""
-
-        if (url) {
-          const response = await fetch(url)
-          const blob = await response.blob()
-          const base64 = await convertBlobToBase64(blob)
-
-          setAssistantImages(prev => [
-            ...prev,
-            {
-              assistantId: updatedAssistant.id,
-              path: filePath,
-              base64,
-              url
-            }
-          ])
-        }
       }
 
       await handleWorkspaceUpdates(

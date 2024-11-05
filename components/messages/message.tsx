@@ -54,9 +54,7 @@ export const Message: FC<MessageProps> = ({
     availableLocalModels,
     availableOpenRouterModels,
     chatMessages,
-    selectedAssistant,
     chatImages,
-    assistantImages,
     toolInUse,
     files,
     models
@@ -140,14 +138,6 @@ export const Message: FC<MessageProps> = ({
     ...availableOpenRouterModels
   ].find(llm => llm.modelId === message.model) as LLM
 
-  const messageAssistantImage = assistantImages.find(
-    image => image.assistantId === message.assistant_id
-  )?.base64
-
-  const selectedAssistantImage = assistantImages.find(
-    image => image.path === selectedAssistant?.image_path
-  )?.base64
-
   const modelDetails = LLM_LIST.find(model => model.modelId === message.model)
 
   const fileAccumulator: Record<
@@ -214,19 +204,6 @@ export const Message: FC<MessageProps> = ({
           ) : (
             <div className="flex items-center space-x-3">
               {message.role === "assistant" ? (
-                messageAssistantImage ? (
-                  <Image
-                    style={{
-                      width: `${ICON_SIZE}px`,
-                      height: `${ICON_SIZE}px`
-                    }}
-                    className="rounded"
-                    src={messageAssistantImage}
-                    alt="assistant image"
-                    height={ICON_SIZE}
-                    width={ICON_SIZE}
-                  />
-                ) : (
                   <WithTooltip
                     display={<div>{MODEL_DATA?.modelName}</div>}
                     trigger={
@@ -237,7 +214,6 @@ export const Message: FC<MessageProps> = ({
                       />
                     }
                   />
-                )
               ) : profile?.image_url ? (
                 <Image
                   className={`size-[32px] rounded`}
@@ -255,13 +231,7 @@ export const Message: FC<MessageProps> = ({
 
               <div className="font-semibold">
                 {message.role === "assistant"
-                  ? message.assistant_id
-                    ? assistants.find(
-                        assistant => assistant.id === message.assistant_id
-                      )?.name
-                    : selectedAssistant
-                      ? selectedAssistant?.name
-                      : MODEL_DATA?.modelName
+                  ? MODEL_DATA?.modelName
                   : profile?.display_name ?? profile?.username}
               </div>
             </div>

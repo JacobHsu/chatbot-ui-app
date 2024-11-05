@@ -32,8 +32,6 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
     setSelectedChat,
     setChatSettings,
     setChatImages,
-    assistants,
-    setSelectedAssistant,
     setChatFileItems,
     setChatFiles,
     setShowFilesDisplay,
@@ -153,21 +151,6 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
   const fetchChat = async () => {
     const chat = await getChatById(params.chatid as string)
     if (!chat) return
-
-    if (chat.assistant_id) {
-      const assistant = assistants.find(
-        assistant => assistant.id === chat.assistant_id
-      )
-
-      if (assistant) {
-        setSelectedAssistant(assistant)
-
-        const assistantTools = (
-          await getAssistantToolsByAssistantId(assistant.id)
-        ).tools
-        setSelectedTools(assistantTools)
-      }
-    }
 
     setSelectedChat(chat)
     setChatSettings({

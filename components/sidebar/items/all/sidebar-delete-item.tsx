@@ -9,7 +9,7 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog"
 import { ChatbotUIContext } from "@/context/context"
-import { deleteAssistant } from "@/db/assistants"
+// import { deleteAssistant } from "@/db/assistants"
 import { deleteChat } from "@/db/chats"
 import { deleteCollection } from "@/db/collections"
 import { deleteFile } from "@/db/files"
@@ -37,7 +37,7 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     setPrompts,
     setFiles,
     setCollections,
-    setAssistants,
+    // setAssistants,
     setTools,
     setModels
   } = useContext(ChatbotUIContext)
@@ -63,12 +63,12 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     collections: async (collection: Tables<"collections">) => {
       await deleteCollection(collection.id)
     },
-    assistants: async (assistant: Tables<"assistants">) => {
-      await deleteAssistant(assistant.id)
-      setChats(prevState =>
-        prevState.filter(chat => chat.assistant_id !== assistant.id)
-      )
-    },
+    // assistants: async (assistant: Tables<"assistants">) => {
+    //   await deleteAssistant(assistant.id)
+    //   setChats(prevState =>
+    //     prevState.filter(chat => chat.assistant_id !== assistant.id)
+    //   )
+    // },
     tools: async (tool: Tables<"tools">) => {
       await deleteTool(tool.id)
     },
@@ -83,7 +83,7 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     prompts: setPrompts,
     files: setFiles,
     collections: setCollections,
-    assistants: setAssistants,
+    // assistants: setAssistants,
     tools: setTools,
     models: setModels
   }

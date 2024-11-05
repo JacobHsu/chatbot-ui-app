@@ -45,7 +45,6 @@ export const useChatHandler = () => {
     setAbortController,
     chatSettings,
     newMessageImages,
-    selectedAssistant,
     chatMessages,
     chatImages,
     setChatImages,
@@ -99,51 +98,7 @@ export const useChatHandler = () => {
     setSelectedTools([])
     setToolInUse("none")
 
-    if (selectedAssistant) {
-      setChatSettings({
-        model: selectedAssistant.model as LLMID,
-        prompt: selectedAssistant.prompt,
-        temperature: selectedAssistant.temperature,
-        contextLength: selectedAssistant.context_length,
-        includeProfileContext: selectedAssistant.include_profile_context,
-        includeWorkspaceInstructions:
-          selectedAssistant.include_workspace_instructions,
-        embeddingsProvider: selectedAssistant.embeddings_provider as
-          | "openai"
-          | "local"
-      })
-
-      let allFiles = []
-
-      const assistantFiles = (
-        await getAssistantFilesByAssistantId(selectedAssistant.id)
-      ).files
-      allFiles = [...assistantFiles]
-      const assistantCollections = (
-        await getAssistantCollectionsByAssistantId(selectedAssistant.id)
-      ).collections
-      for (const collection of assistantCollections) {
-        const collectionFiles = (
-          await getCollectionFilesByCollectionId(collection.id)
-        ).files
-        allFiles = [...allFiles, ...collectionFiles]
-      }
-      const assistantTools = (
-        await getAssistantToolsByAssistantId(selectedAssistant.id)
-      ).tools
-
-      setSelectedTools(assistantTools)
-      setChatFiles(
-        allFiles.map(file => ({
-          id: file.id,
-          name: file.name,
-          type: file.type,
-          file: null
-        }))
-      )
-
-      if (allFiles.length > 0) setShowFilesDisplay(true)
-    } else if (selectedPreset) {
+    if (selectedPreset) {
       setChatSettings({
         model: selectedPreset.model as LLMID,
         prompt: selectedPreset.prompt,
@@ -256,7 +211,6 @@ export const useChatHandler = () => {
           b64Images,
           isRegeneration,
           setChatMessages,
-          selectedAssistant
         )
 
       let payload: ChatPayload = {
@@ -265,7 +219,7 @@ export const useChatHandler = () => {
         chatMessages: isRegeneration
           ? [...chatMessages]
           : [...chatMessages, tempUserChatMessage],
-        assistant: selectedChat?.assistant_id ? selectedAssistant : null,
+        assistant: null,
         messageFileItems: retrievedFileItems,
         chatFileItems: chatFileItems
       }
@@ -344,7 +298,6 @@ export const useChatHandler = () => {
           profile!,
           selectedWorkspace!,
           messageContent,
-          selectedAssistant!,
           newMessageFiles,
           setSelectedChat,
           setChats,
@@ -376,8 +329,7 @@ export const useChatHandler = () => {
         retrievedFileItems,
         setChatMessages,
         setChatFileItems,
-        setChatImages,
-        selectedAssistant
+        setChatImages
       )
 
       setIsGenerating(false)

@@ -12,7 +12,6 @@ import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType, DataListType } from "@/types"
 import { FC, useContext, useEffect, useRef, useState } from "react"
 import { Separator } from "../ui/separator"
-// import { AssistantItem } from "./items/assistants/assistant-item"
 import { ChatItem } from "./items/chat/chat-item"
 import { CollectionItem } from "./items/collections/collection-item"
 import { FileItem } from "./items/files/file-item"
@@ -73,14 +72,6 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
             collection={item as Tables<"collections">}
           />
         )
-
-      // case "assistants":
-      //   return (
-      //     <AssistantItem
-      //       key={item.id}
-      //       assistant={item as Tables<"assistants">}
-      //     />
-      //   )
 
       case "tools":
         return <ToolItem key={item.id} tool={item as Tables<"tools">} />

@@ -246,14 +246,6 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
         selectedPreset,
         setSelectedPreset,
 
-        // ASSISTANT STORE
-        selectedAssistant,
-        setSelectedAssistant,
-        assistantImages,
-        setAssistantImages,
-        openaiAssistants,
-        setOpenaiAssistants,
-
         // PASSIVE CHAT STORE
         userInput,
         setUserInput,

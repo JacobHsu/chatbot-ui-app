@@ -7,10 +7,6 @@ import {
   SheetTitle
 } from "@/components/ui/sheet"
 import { ChatbotUIContext } from "@/context/context"
-import { createAssistantCollections } from "@/db/assistant-collections"
-import { createAssistantFiles } from "@/db/assistant-files"
-import { createAssistantTools } from "@/db/assistant-tools"
-import { createAssistant, updateAssistant } from "@/db/assistants"
 import { createChat } from "@/db/chats"
 import { createCollectionFiles } from "@/db/collection-files"
 import { createCollection } from "@/db/collections"
@@ -18,12 +14,7 @@ import { createFileBasedOnExtension } from "@/db/files"
 import { createModel } from "@/db/models"
 import { createPreset } from "@/db/presets"
 import { createPrompt } from "@/db/prompts"
-import {
-  getAssistantImageFromStorage,
-  uploadAssistantImage
-} from "@/db/storage/assistant-images"
 import { createTool } from "@/db/tools"
-import { convertBlobToBase64 } from "@/lib/blob-to-b64"
 import { Tables, TablesInsert } from "@/supabase/types"
 import { ContentType } from "@/types"
 import { FC, useContext, useRef, useState } from "react"
@@ -53,8 +44,8 @@ export const SidebarCreateItem: FC<SidebarCreateItemProps> = ({
     setPrompts,
     setFiles,
     setCollections,
-    setAssistants,
-    setAssistantImages,
+    // setAssistants,
+    // setAssistantImages,
     setTools,
     setModels
   } = useContext(ChatbotUIContext)
@@ -104,71 +95,7 @@ export const SidebarCreateItem: FC<SidebarCreateItemProps> = ({
 
       return createdCollection
     },
-    assistants: async (
-      createState: {
-        image: File
-        files: Tables<"files">[]
-        collections: Tables<"collections">[]
-        tools: Tables<"tools">[]
-      } & Tables<"assistants">,
-      workspaceId: string
-    ) => {
-      const { image, files, collections, tools, ...rest } = createState
 
-      const createdAssistant = await createAssistant(rest, workspaceId)
-
-      let updatedAssistant = createdAssistant
-
-      if (image) {
-        const filePath = await uploadAssistantImage(createdAssistant, image)
-
-        updatedAssistant = await updateAssistant(createdAssistant.id, {
-          image_path: filePath
-        })
-
-        const url = (await getAssistantImageFromStorage(filePath)) || ""
-
-        if (url) {
-          const response = await fetch(url)
-          const blob = await response.blob()
-          const base64 = await convertBlobToBase64(blob)
-
-          setAssistantImages(prev => [
-            ...prev,
-            {
-              assistantId: updatedAssistant.id,
-              path: filePath,
-              base64,
-              url
-            }
-          ])
-        }
-      }
-
-      const assistantFiles = files.map(file => ({
-        user_id: rest.user_id,
-        assistant_id: createdAssistant.id,
-        file_id: file.id
-      }))
-
-      const assistantCollections = collections.map(collection => ({
-        user_id: rest.user_id,
-        assistant_id: createdAssistant.id,
-        collection_id: collection.id
-      }))
-
-      const assistantTools = tools.map(tool => ({
-        user_id: rest.user_id,
-        assistant_id: createdAssistant.id,
-        tool_id: tool.id
-      }))
-
-      await createAssistantFiles(assistantFiles)
-      await createAssistantCollections(assistantCollections)
-      await createAssistantTools(assistantTools)
-
-      return updatedAssistant
-    },
     tools: createTool,
     models: createModel
   }
@@ -179,7 +106,6 @@ export const SidebarCreateItem: FC<SidebarCreateItemProps> = ({
     prompts: setPrompts,
     files: setFiles,
     collections: setCollections,
-    assistants: setAssistants,
     tools: setTools,
     models: setModels
   }

@@ -1,4 +1,4 @@
-import "./assistants"
+// import "./assistants"
 import "./chats"
 import "./file-items"
 import "./files"

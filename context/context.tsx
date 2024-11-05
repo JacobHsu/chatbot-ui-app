@@ -59,14 +59,6 @@ interface ChatbotUIContext {
   selectedPreset: Tables<"presets"> | null
   setSelectedPreset: Dispatch<SetStateAction<Tables<"presets"> | null>>
 
-  // ASSISTANT STORE
-  selectedAssistant: Tables<"assistants"> | null
-  setSelectedAssistant: Dispatch<SetStateAction<Tables<"assistants"> | null>>
-  assistantImages: AssistantImage[]
-  setAssistantImages: Dispatch<SetStateAction<AssistantImage[]>>
-  openaiAssistants: any[]
-  setOpenaiAssistants: Dispatch<SetStateAction<any[]>>
-
   // PASSIVE CHAT STORE
   userInput: string
   setUserInput: Dispatch<SetStateAction<string>>
@@ -184,14 +176,6 @@ export const ChatbotUIContext = createContext<ChatbotUIContext>({
   // PRESET STORE
   selectedPreset: null,
   setSelectedPreset: () => {},
-
-  // ASSISTANT STORE
-  selectedAssistant: null,
-  setSelectedAssistant: () => {},
-  assistantImages: [],
-  setAssistantImages: () => {},
-  openaiAssistants: [],
-  setOpenaiAssistants: () => {},
 
   // PASSIVE CHAT STORE
   userInput: "",

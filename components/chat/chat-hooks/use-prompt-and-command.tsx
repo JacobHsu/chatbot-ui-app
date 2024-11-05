@@ -24,7 +24,6 @@ export const usePromptAndCommand = () => {
     setSelectedTools,
     setAtCommand,
     setIsAssistantPickerOpen,
-    setSelectedAssistant,
     setChatSettings,
     setChatFiles
   } = useContext(ChatbotUIContext)
@@ -137,7 +136,6 @@ export const usePromptAndCommand = () => {
   const handleSelectAssistant = async (assistant: Tables<"assistants">) => {
     setIsAssistantPickerOpen(false)
     setUserInput(userInput.replace(/@[^ ]*$/, ""))
-    setSelectedAssistant(assistant)
 
     setChatSettings({
       model: assistant.model as LLMID,
