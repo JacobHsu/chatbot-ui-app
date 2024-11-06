@@ -10,7 +10,6 @@ import { CreateFile } from "./items/files/create-file"
 import { CreateModel } from "./items/models/create-model"
 import { CreatePreset } from "./items/presets/create-preset"
 import { CreatePrompt } from "./items/prompts/create-prompt"
-import { CreateTool } from "./items/tools/create-tool"
 
 interface SidebarCreateButtonsProps {
   contentType: ContentType
@@ -74,11 +73,6 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
           setIsCreatingCollection(true)
         }
 
-      case "tools":
-        return async () => {
-          setIsCreatingTool(true)
-        }
-
       case "models":
         return async () => {
           setIsCreatingModel(true)
@@ -127,10 +121,6 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
           isOpen={isCreatingCollection}
           onOpenChange={setIsCreatingCollection}
         />
-      )}
-
-      {isCreatingTool && (
-        <CreateTool isOpen={isCreatingTool} onOpenChange={setIsCreatingTool} />
       )}
 
       {isCreatingModel && (

@@ -8,7 +8,7 @@ import {
   OpenRouterLLM,
   WorkspaceImage
 } from "@/types"
-import { AssistantImage } from "@/types/images/assistant-image"
+
 import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { Dispatch, SetStateAction, createContext } from "react"
 
@@ -34,8 +34,6 @@ interface ChatbotUIContext {
   setPresets: Dispatch<SetStateAction<Tables<"presets">[]>>
   prompts: Tables<"prompts">[]
   setPrompts: Dispatch<SetStateAction<Tables<"prompts">[]>>
-  tools: Tables<"tools">[]
-  setTools: Dispatch<SetStateAction<Tables<"tools">[]>>
   workspaces: Tables<"workspaces">[]
   setWorkspaces: Dispatch<SetStateAction<Tables<"workspaces">[]>>
 
@@ -152,8 +150,6 @@ export const ChatbotUIContext = createContext<ChatbotUIContext>({
   setPresets: () => {},
   prompts: [],
   setPrompts: () => {},
-  tools: [],
-  setTools: () => {},
   workspaces: [],
   setWorkspaces: () => {},
 

@@ -10,7 +10,6 @@ import { getFoldersByWorkspaceId } from "@/db/folders"
 import { getModelWorkspacesByWorkspaceId } from "@/db/models"
 import { getPresetWorkspacesByWorkspaceId } from "@/db/presets"
 import { getPromptWorkspacesByWorkspaceId } from "@/db/prompts"
-import { getToolWorkspacesByWorkspaceId } from "@/db/tools"
 import { getWorkspaceById } from "@/db/workspaces"
 
 import { supabase } from "@/lib/supabase/browser-client"
@@ -39,7 +38,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setFiles,
     setPresets,
     setPrompts,
-    setTools,
     setModels,
     setSelectedWorkspace,
     setSelectedChat,
@@ -114,8 +112,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     const promptData = await getPromptWorkspacesByWorkspaceId(workspaceId)
     setPrompts(promptData.prompts)
 
-    const toolData = await getToolWorkspacesByWorkspaceId(workspaceId)
-    setTools(toolData.tools)
 
     const modelData = await getModelWorkspacesByWorkspaceId(workspaceId)
     setModels(modelData.models)

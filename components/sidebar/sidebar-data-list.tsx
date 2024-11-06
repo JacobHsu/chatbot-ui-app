@@ -19,8 +19,6 @@ import { Folder } from "./items/folders/folder-item"
 import { ModelItem } from "./items/models/model-item"
 import { PresetItem } from "./items/presets/preset-item"
 import { PromptItem } from "./items/prompts/prompt-item"
-import { ToolItem } from "./items/tools/tool-item"
-
 interface SidebarDataListProps {
   contentType: ContentType
   data: DataListType
@@ -39,7 +37,6 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     setFiles,
     setCollections,
     setAssistants,
-    setTools,
     setModels
   } = useContext(ChatbotUIContext)
 
@@ -72,9 +69,6 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
             collection={item as Tables<"collections">}
           />
         )
-
-      case "tools":
-        return <ToolItem key={item.id} tool={item as Tables<"tools">} />
 
       case "models":
         return <ModelItem key={item.id} model={item as Tables<"models">} />
@@ -141,7 +135,6 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     files: setFiles,
     collections: setCollections,
     assistants: setAssistants,
-    tools: setTools,
     models: setModels
   }
 

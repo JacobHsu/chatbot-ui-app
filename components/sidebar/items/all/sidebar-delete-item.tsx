@@ -37,8 +37,6 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     setPrompts,
     setFiles,
     setCollections,
-    // setAssistants,
-    setTools,
     setModels
   } = useContext(ChatbotUIContext)
 
@@ -83,8 +81,6 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     prompts: setPrompts,
     files: setFiles,
     collections: setCollections,
-    // assistants: setAssistants,
-    tools: setTools,
     models: setModels
   }
 

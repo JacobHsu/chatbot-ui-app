@@ -1,7 +1,6 @@
 import { ContentType } from "@/types"
 import {
   IconAdjustmentsHorizontal,
-  IconBolt,
   IconBooks,
   IconFile,
   IconMessage,
@@ -62,11 +61,6 @@ export const SidebarSwitcher: FC<SidebarSwitcherProps> = ({
           onContentTypeChange={onContentTypeChange}
         />
 
-        <SidebarSwitchItem
-          icon={<IconBolt size={SIDEBAR_ICON_SIZE} />}
-          contentType="tools"
-          onContentTypeChange={onContentTypeChange}
-        />
       </TabsList>
 
       <div className="flex flex-col items-center space-y-4">
