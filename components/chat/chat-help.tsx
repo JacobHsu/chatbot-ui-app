@@ -1,11 +1,11 @@
 import useHotkey from "@/lib/hooks/use-hotkey"
 import {
-  IconBrandGithub,
-  IconBrandX,
-  IconHelpCircle,
+  // IconBrandGithub,
+  // IconBrandX,
+  // IconHelpCircle,
   IconQuestionMark
 } from "@tabler/icons-react"
-import Link from "next/link"
+// import Link from "next/link"
 import { FC, useState } from "react"
 import {
   DropdownMenu,
@@ -33,36 +33,19 @@ export const ChatHelp: FC<ChatHelpProps> = ({}) => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel className="flex items-center justify-between">
           <div className="flex space-x-2">
-            <Link
-              className="cursor-pointer hover:opacity-50"
-              href="https://twitter.com/ChatbotUI"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconBrandX />
-            </Link>
-
-            <Link
-              className="cursor-pointer hover:opacity-50"
-              href="https://github.com/mckaywrigley/chatbot-ui"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconBrandGithub />
-            </Link>
           </div>
 
           <div className="flex space-x-2">
             <Announcements />
 
-            <Link
+            {/* <Link
               className="cursor-pointer hover:opacity-50"
               href="/help"
               target="_blank"
               rel="noopener noreferrer"
             >
               <IconHelpCircle size={24} />
-            </Link>
+            </Link> */}
           </div>
         </DropdownMenuLabel>
 
