@@ -1,5 +1,5 @@
 import { ChatbotUIContext } from "@/context/context"
-import { createAssistants } from "@/db/assistants"
+
 import { createChats } from "@/db/chats"
 import { createCollections } from "@/db/collections"
 import { createFiles } from "@/db/files"
@@ -64,7 +64,6 @@ export const Import: FC<ImportProps> = ({}) => {
     prompts: setPrompts,
     files: setFiles,
     collections: setCollections,
-    assistants: setAssistants,
   }
 
   const handleSelectFiles = async (e: any) => {
@@ -170,12 +169,7 @@ export const Import: FC<ImportProps> = ({}) => {
       collections: await createCollections(
         saveData.collections,
         selectedWorkspace.id
-      ),
-      assistants: await createAssistants(
-        saveData.assistants,
-        selectedWorkspace.id
-      ),
-      tools: await createTools(saveData.tools, selectedWorkspace.id)
+      )
     }
 
     Object.keys(createdItems).forEach(key => {

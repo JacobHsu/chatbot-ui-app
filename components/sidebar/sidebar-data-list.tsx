@@ -1,5 +1,5 @@
 import { ChatbotUIContext } from "@/context/context"
-import { updateAssistant } from "@/db/assistants"
+
 import { updateChat } from "@/db/chats"
 import { updateCollection } from "@/db/collections"
 import { updateFile } from "@/db/files"
@@ -123,8 +123,6 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     prompts: updatePrompt,
     files: updateFile,
     collections: updateCollection,
-    assistants: updateAssistant,
-    tools: updateTool,
     models: updateModel
   }
 
@@ -134,7 +132,6 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     prompts: setPrompts,
     files: setFiles,
     collections: setCollections,
-    assistants: setAssistants,
     models: setModels
   }
 

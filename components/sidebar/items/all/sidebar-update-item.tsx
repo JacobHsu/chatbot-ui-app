@@ -25,12 +25,7 @@ import {
   deleteAssistantTool,
   getAssistantToolsByAssistantId
 } from "@/db/assistant-tools"
-import {
-  createAssistantWorkspaces,
-  deleteAssistantWorkspace,
-  getAssistantWorkspacesByAssistantId,
-  updateAssistant
-} from "@/db/assistants"
+
 import { updateChat } from "@/db/chats"
 import {
   createCollectionFile,
@@ -67,17 +62,7 @@ import {
   getPromptWorkspacesByPromptId,
   updatePrompt
 } from "@/db/prompts"
-import {
-  getAssistantImageFromStorage,
-  uploadAssistantImage
-} from "@/db/storage/assistant-images"
-import {
-  createToolWorkspaces,
-  deleteToolWorkspace,
-  getToolWorkspacesByToolId,
-  updateTool
-} from "@/db/tools"
-import { convertBlobToBase64 } from "@/lib/blob-to-b64"
+
 import { Tables, TablesUpdate } from "@/supabase/types"
 import { CollectionFile, ContentType, DataItemType } from "@/types"
 import { FC, useContext, useEffect, useRef, useState } from "react"
@@ -245,14 +230,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
       const item = await getCollectionWorkspacesByCollectionId(collectionId)
       return item.workspaces
     },
-    assistants: async (assistantId: string) => {
-      const item = await getAssistantWorkspacesByAssistantId(assistantId)
-      return item.workspaces
-    },
-    tools: async (toolId: string) => {
-      const item = await getToolWorkspacesByToolId(toolId)
-      return item.workspaces
-    },
     models: async (modelId: string) => {
       const item = await getModelWorkspacesByModelId(modelId)
       return item.workspaces
@@ -413,129 +390,7 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
 
       return updatedCollection
     },
-    assistants: async (
-      assistantId: string,
-      updateState: {
-        assistantId: string
-        image: File
-      } & TablesUpdate<"assistants">
-    ) => {
-      const { image, ...rest } = updateState
 
-      const filesToAdd = selectedAssistantFiles.filter(
-        selectedFile =>
-          !startingAssistantFiles.some(
-            startingFile => startingFile.id === selectedFile.id
-          )
-      )
-
-      const filesToRemove = startingAssistantFiles.filter(startingFile =>
-        selectedAssistantFiles.some(
-          selectedFile => selectedFile.id === startingFile.id
-        )
-      )
-
-      for (const file of filesToAdd) {
-        await createAssistantFile({
-          user_id: item.user_id,
-          assistant_id: assistantId,
-          file_id: file.id
-        })
-      }
-
-      for (const file of filesToRemove) {
-        await deleteAssistantFile(assistantId, file.id)
-      }
-
-      const collectionsToAdd = selectedAssistantCollections.filter(
-        selectedCollection =>
-          !startingAssistantCollections.some(
-            startingCollection =>
-              startingCollection.id === selectedCollection.id
-          )
-      )
-
-      const collectionsToRemove = startingAssistantCollections.filter(
-        startingCollection =>
-          selectedAssistantCollections.some(
-            selectedCollection =>
-              selectedCollection.id === startingCollection.id
-          )
-      )
-
-      for (const collection of collectionsToAdd) {
-        await createAssistantCollection({
-          user_id: item.user_id,
-          assistant_id: assistantId,
-          collection_id: collection.id
-        })
-      }
-
-      for (const collection of collectionsToRemove) {
-        await deleteAssistantCollection(assistantId, collection.id)
-      }
-
-      const toolsToAdd = selectedAssistantTools.filter(
-        selectedTool =>
-          !startingAssistantTools.some(
-            startingTool => startingTool.id === selectedTool.id
-          )
-      )
-
-      const toolsToRemove = startingAssistantTools.filter(startingTool =>
-        selectedAssistantTools.some(
-          selectedTool => selectedTool.id === startingTool.id
-        )
-      )
-
-      for (const tool of toolsToAdd) {
-        await createAssistantTool({
-          user_id: item.user_id,
-          assistant_id: assistantId,
-          tool_id: tool.id
-        })
-      }
-
-      for (const tool of toolsToRemove) {
-        await deleteAssistantTool(assistantId, tool.id)
-      }
-
-      let updatedAssistant = await updateAssistant(assistantId, rest)
-
-      if (image) {
-        const filePath = await uploadAssistantImage(updatedAssistant, image)
-
-        updatedAssistant = await updateAssistant(assistantId, {
-          image_path: filePath
-        })
-
-      }
-
-      await handleWorkspaceUpdates(
-        startingWorkspaces,
-        selectedWorkspaces,
-        assistantId,
-        deleteAssistantWorkspace,
-        createAssistantWorkspaces as any,
-        "assistant_id"
-      )
-
-      return updatedAssistant
-    },
-    tools: async (toolId: string, updateState: TablesUpdate<"tools">) => {
-      const updatedTool = await updateTool(toolId, updateState)
-
-      await handleWorkspaceUpdates(
-        startingWorkspaces,
-        selectedWorkspaces,
-        toolId,
-        deleteToolWorkspace,
-        createToolWorkspaces as any,
-        "tool_id"
-      )
-
-      return updatedTool
-    },
     models: async (modelId: string, updateState: TablesUpdate<"models">) => {
       const updatedModel = await updateModel(modelId, updateState)
 
@@ -558,7 +413,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     prompts: setPrompts,
     files: setFiles,
     collections: setCollections,
-    assistants: setAssistants,
     models: setModels
   }
 

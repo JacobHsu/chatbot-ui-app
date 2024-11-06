@@ -2,7 +2,7 @@
 
 import { Dashboard } from "@/components/ui/dashboard"
 import { ChatbotUIContext } from "@/context/context"
-import { getAssistantWorkspacesByWorkspaceId } from "@/db/assistants"
+
 import { getChatsByWorkspaceId } from "@/db/chats"
 import { getCollectionWorkspacesByWorkspaceId } from "@/db/collections"
 import { getFileWorkspacesByWorkspaceId } from "@/db/files"
@@ -31,7 +31,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
   const {
     setChatSettings,
-    setAssistants,
     setChats,
     setCollections,
     setFolders,
@@ -88,9 +87,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
     const workspace = await getWorkspaceById(workspaceId)
     setSelectedWorkspace(workspace)
-
-    const assistantData = await getAssistantWorkspacesByWorkspaceId(workspaceId)
-    setAssistants(assistantData.assistants)
 
 
     const chats = await getChatsByWorkspaceId(workspaceId)

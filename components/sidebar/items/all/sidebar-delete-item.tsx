@@ -9,7 +9,7 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog"
 import { ChatbotUIContext } from "@/context/context"
-// import { deleteAssistant } from "@/db/assistants"
+
 import { deleteChat } from "@/db/chats"
 import { deleteCollection } from "@/db/collections"
 import { deleteFile } from "@/db/files"
@@ -17,7 +17,7 @@ import { deleteModel } from "@/db/models"
 import { deletePreset } from "@/db/presets"
 import { deletePrompt } from "@/db/prompts"
 import { deleteFileFromStorage } from "@/db/storage/files"
-import { deleteTool } from "@/db/tools"
+
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType } from "@/types"
 import { FC, useContext, useRef, useState } from "react"
@@ -61,15 +61,7 @@ export const SidebarDeleteItem: FC<SidebarDeleteItemProps> = ({
     collections: async (collection: Tables<"collections">) => {
       await deleteCollection(collection.id)
     },
-    // assistants: async (assistant: Tables<"assistants">) => {
-    //   await deleteAssistant(assistant.id)
-    //   setChats(prevState =>
-    //     prevState.filter(chat => chat.assistant_id !== assistant.id)
-    //   )
-    // },
-    tools: async (tool: Tables<"tools">) => {
-      await deleteTool(tool.id)
-    },
+
     models: async (model: Tables<"models">) => {
       await deleteModel(model.id)
     }
