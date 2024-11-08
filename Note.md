@@ -1,4 +1,91 @@
 
+## chat
+
+components/utility/global-state.tsx  
+
+
+/app/[locale]/[workspaceid]/chat/page.tsx  
+
+`<ChatSettings />`  
+
+/components/models/model-select.tsx Hosted Local 選單
+
+`const [tab, setTab] = useState<"hosted" | "local">("hosted")`
+
+
+### chat-settings
+
+components/chat/chat-settings.tsx
+
+
+
+```js
+const fullModel = allModels.find(llm => llm.modelId === chatSettings.model)
+{fullModel?.modelName} // 從 modelId 查到 modelName
+```
+
+lib/models/llm/openai-llm-list.ts
+```js
+const GPT4Turbo: LLM = {
+  modelId: "gpt-4-turbo-preview",
+  modelName: "GPT-4 Turbo",
+```
+
+lib/models/llm/llm-list.ts
+
+```js
+import { OPENAI_LLM_LIST } from "./openai-llm-list"
+export const LLM_LIST_MAP: Record<string, LLM[]> = {
+  openai: OPENAI_LLM_LIST,
+```
+
+lib/models/fetch-models.ts
+
+```js
+import { LLM_LIST_MAP } from "./llm/llm-list"
+const models = LLM_LIST_MAP[provider]
+
+modelsToAdd.push(...models)
+
+return {
+  hostedModels: modelsToAdd
+}
+```
+
+app/[locale]/setup/page.tsx
+
+```js
+import { fetchHostedModels } from "@/lib/models/fetch-models"
+  useEffect(() => {
+     const data = await fetchHostedModels(profile)
+```
+
+
+app/[locale]/[workspaceid]/layout.tsx
+
+```js
+    const workspace = await getWorkspaceById(workspaceId)
+    // default_model:"gpt-4-turbo-preview", embeddings_provider:"openai"
+
+    setSelectedWorkspace(workspace)
+
+    setChatSettings({
+      model: (workspace?.default_model || "gpt-4-1106-preview") as LLMID,
+      ...
+      embeddingsProvider:
+        (workspace?.embeddings_provider as "openai" | "local") || "openai"
+    })
+```
+
+
+components/chat/chat-settings.tsx
+
+```js
+import { ChatSettingsForm } from "../ui/chat-settings-form"
+<ChatSettingsForm
+      chatSettings={defaultChatSettings as any}
+```
+
 
 ## sidebar
 

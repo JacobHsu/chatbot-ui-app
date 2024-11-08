@@ -1,5 +1,5 @@
 import { ChatbotUIContext } from "@/context/context"
-import { CHAT_SETTING_LIMITS } from "@/lib/chat-setting-limits"
+// import { CHAT_SETTING_LIMITS } from "@/lib/chat-setting-limits"
 import useHotkey from "@/lib/hooks/use-hotkey"
 import { LLMID, ModelProvider } from "@/types"
 import { IconAdjustmentsHorizontal } from "@tabler/icons-react"
@@ -35,15 +35,16 @@ export const ChatSettings: FC<ChatSettingsProps> = ({}) => {
 
     setChatSettings({
       ...chatSettings,
-      temperature: Math.min(
-        chatSettings.temperature,
-        CHAT_SETTING_LIMITS[chatSettings.model]?.MAX_TEMPERATURE || 1
-      ),
-      contextLength: Math.min(
-        chatSettings.contextLength,
-        CHAT_SETTING_LIMITS[chatSettings.model]?.MAX_CONTEXT_LENGTH || 4096
-      )
+      // temperature: Math.min(
+      //   chatSettings.temperature,
+      //   CHAT_SETTING_LIMITS[chatSettings.model]?.MAX_TEMPERATURE || 1
+      // ),
+      // contextLength: Math.min(
+      //   chatSettings.contextLength,
+      //   CHAT_SETTING_LIMITS[chatSettings.model]?.MAX_CONTEXT_LENGTH || 4096
+      // )
     })
+
   }, [chatSettings?.model])
 
   if (!chatSettings) return null
@@ -73,7 +74,8 @@ export const ChatSettings: FC<ChatSettingsProps> = ({}) => {
           variant="ghost"
         >
           <div className="max-w-[120px] truncate text-lg sm:max-w-[300px] lg:max-w-[500px]">
-            {fullModel?.modelName || chatSettings.model}
+            {/* {fullModel?.modelName || chatSettings.model} */}
+            {fullModel?.modelName}
           </div>
 
           <IconAdjustmentsHorizontal size={28} />

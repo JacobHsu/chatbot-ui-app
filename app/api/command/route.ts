@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     })
 
     const response = await openai.chat.completions.create({
-      model: "gpt-4-1106-preview",
+      model: "gpt-3.5-turbo-1106 ", // gpt-3.5-turbo-1106  // gpt-4-1106-preview"
       messages: [
         {
           role: "system",
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       ],
       temperature: 0,
       max_tokens:
-        CHAT_SETTING_LIMITS["gpt-4-turbo-preview"].MAX_TOKEN_OUTPUT_LENGTH
+        CHAT_SETTING_LIMITS["gpt-3.5-turbo"].MAX_TOKEN_OUTPUT_LENGTH // gpt-3.5-turbo // gpt-4-turbo-preview
       //   response_format: { type: "json_object" }
       //   stream: true
     })

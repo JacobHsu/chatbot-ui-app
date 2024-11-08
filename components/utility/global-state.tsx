@@ -23,7 +23,7 @@ import {
   OpenRouterLLM,
   WorkspaceImage
 } from "@/types"
-import { AssistantImage } from "@/types/images/assistant-image"
+
 import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { useRouter } from "next/navigation"
 import { FC, useEffect, useState } from "react"
@@ -66,17 +66,11 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
   const [selectedPreset, setSelectedPreset] =
     useState<Tables<"presets"> | null>(null)
 
-  // ASSISTANT STORE
-  const [selectedAssistant, setSelectedAssistant] =
-    useState<Tables<"assistants"> | null>(null)
-  const [assistantImages, setAssistantImages] = useState<AssistantImage[]>([])
-  const [openaiAssistants, setOpenaiAssistants] = useState<any[]>([])
-
   // PASSIVE CHAT STORE
   const [userInput, setUserInput] = useState<string>("")
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([])
   const [chatSettings, setChatSettings] = useState<ChatSettings>({
-    model: "gpt-4-turbo-preview",
+    model: "gpt-3.5-turbo", // gpt-4-turbo-preview
     prompt: "You are a helpful AI assistant.",
     temperature: 0.5,
     contextLength: 4000,

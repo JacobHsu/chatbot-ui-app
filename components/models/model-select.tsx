@@ -35,7 +35,7 @@ export const ModelSelect: FC<ModelSelectProps> = ({
 
   const [isOpen, setIsOpen] = useState(false)
   const [search, setSearch] = useState("")
-  const [tab, setTab] = useState<"hosted" | "local">("hosted")
+  const [tab, setTab] = useState<"hosted" | "local">("local")
 
   useEffect(() => {
     if (isOpen) {
