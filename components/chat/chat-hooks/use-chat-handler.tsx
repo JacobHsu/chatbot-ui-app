@@ -341,34 +341,12 @@ export const useChatHandler = () => {
     }
   }
 
-  const handleSendEdit = async (
-    editedContent: string,
-    sequenceNumber: number
-  ) => {
-    if (!selectedChat) return
-
-    await deleteMessagesIncludingAndAfter(
-      selectedChat.user_id,
-      selectedChat.id,
-      sequenceNumber
-    )
-
-    const filteredMessages = chatMessages.filter(
-      chatMessage => chatMessage.message.sequence_number < sequenceNumber
-    )
-
-    setChatMessages(filteredMessages)
-
-    handleSendMessage(editedContent, filteredMessages, false)
-  }
-
   return {
     chatInputRef,
     prompt,
     handleNewChat,
     handleSendMessage,
     handleFocusChatInput,
-    handleStopMessage,
-    handleSendEdit
+    handleStopMessage
   }
 }

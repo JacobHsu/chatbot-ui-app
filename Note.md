@@ -12,6 +12,26 @@ components/utility/global-state.tsx
 
 `const [tab, setTab] = useState<"hosted" | "local">("hosted")`
 
+### message
+
+components/messages/message.tsx
+
+```js
+<MessageActions
+    onCopy={handleCopy}
+    onEdit={handleStartEdit}
+    isAssistant={message.role === "assistant"}
+```
+Edit按鈕由 message.role 決定 非 assistant 顯示  
+
+components/messages/message-actions.tsx
+
+```js
+{!isAssistant && isHovering && (
+  <WithTooltip
+    display={<div>Edit</div>}
+```
+
 
 ### chat-settings
 

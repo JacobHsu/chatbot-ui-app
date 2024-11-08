@@ -1,27 +1,21 @@
 import { ChatbotUIContext } from "@/context/context"
-import { IconCheck, IconCopy, IconEdit, IconRepeat } from "@tabler/icons-react"
+import { IconCheck, IconCopy, IconRepeat } from "@tabler/icons-react"
 import { FC, useContext, useEffect, useState } from "react"
 import { WithTooltip } from "../ui/with-tooltip"
 
 export const MESSAGE_ICON_SIZE = 18
 
 interface MessageActionsProps {
-  isAssistant: boolean
   isLast: boolean
-  isEditing: boolean
   isHovering: boolean
   onCopy: () => void
-  onEdit: () => void
   onRegenerate: () => void
 }
 
 export const MessageActions: FC<MessageActionsProps> = ({
-  isAssistant,
   isLast,
-  isEditing,
   isHovering,
   onCopy,
-  onEdit,
   onRegenerate
 }) => {
   const { isGenerating } = useContext(ChatbotUIContext)
@@ -33,8 +27,6 @@ export const MessageActions: FC<MessageActionsProps> = ({
     setShowCheckmark(true)
   }
 
-  const handleForkChat = async () => {}
-
   useEffect(() => {
     if (showCheckmark) {
       const timer = setTimeout(() => {
@@ -45,37 +37,8 @@ export const MessageActions: FC<MessageActionsProps> = ({
     }
   }, [showCheckmark])
 
-  return (isLast && isGenerating) || isEditing ? null : (
+  return (isLast && isGenerating) ? null : (
     <div className="text-muted-foreground flex items-center space-x-2">
-      {/* {((isAssistant && isHovering) || isLast) && (
-        <WithTooltip
-          delayDuration={1000}
-          side="bottom"
-          display={<div>Fork Chat</div>}
-          trigger={
-            <IconGitFork
-              className="cursor-pointer hover:opacity-50"
-              size={MESSAGE_ICON_SIZE}
-              onClick={handleForkChat}
-            />
-          }
-        />
-      )} */}
-
-      {!isAssistant && isHovering && (
-        <WithTooltip
-          delayDuration={1000}
-          side="bottom"
-          display={<div>Edit</div>}
-          trigger={
-            <IconEdit
-              className="cursor-pointer hover:opacity-50"
-              size={MESSAGE_ICON_SIZE}
-              onClick={onEdit}
-            />
-          }
-        />
-      )}
 
       {(isHovering || isLast) && (
         <WithTooltip
@@ -111,7 +74,6 @@ export const MessageActions: FC<MessageActionsProps> = ({
         />
       )}
 
-      {/* {1 > 0 && isAssistant && <MessageReplies />} */}
     </div>
   )
 }

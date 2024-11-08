@@ -14,12 +14,10 @@ import {
   IconPencil
 } from "@tabler/icons-react"
 import Image from "next/image"
-import { FC, useContext, useEffect, useRef, useState } from "react"
+import { FC, useContext, useState } from "react"
 import { ModelIcon } from "../models/model-icon"
-import { Button } from "../ui/button"
 import { FileIcon } from "../ui/file-icon"
 import { FilePreview } from "../ui/file-preview"
-import { TextareaAutosize } from "../ui/textarea-autosize"
 import { WithTooltip } from "../ui/with-tooltip"
 import { MessageActions } from "./message-actions"
 import { MessageMarkdown } from "./message-markdown"
@@ -29,24 +27,15 @@ const ICON_SIZE = 32
 interface MessageProps {
   message: Tables<"messages">
   fileItems: Tables<"file_items">[]
-  isEditing: boolean
   isLast: boolean
-  onStartEdit: (message: Tables<"messages">) => void
-  onCancelEdit: () => void
-  onSubmitEdit: (value: string, sequenceNumber: number) => void
 }
 
 export const Message: FC<MessageProps> = ({
   message,
   fileItems,
-  isEditing,
-  isLast,
-  onStartEdit,
-  onCancelEdit,
-  onSubmitEdit
+  isLast
 }) => {
   const {
-    assistants,
     profile,
     isGenerating,
     setIsGenerating,
@@ -61,8 +50,6 @@ export const Message: FC<MessageProps> = ({
   } = useContext(ChatbotUIContext)
 
   const { handleSendMessage } = useChatHandler()
-
-  const editInputRef = useRef<HTMLTextAreaElement>(null)
 
   const [isHovering, setIsHovering] = useState(false)
   const [editedMessage, setEditedMessage] = useState(message.content)
@@ -90,16 +77,6 @@ export const Message: FC<MessageProps> = ({
     }
   }
 
-  const handleSendEdit = () => {
-    onSubmitEdit(editedMessage, message.sequence_number)
-    onCancelEdit()
-  }
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (isEditing && event.key === "Enter" && event.metaKey) {
-      handleSendEdit()
-    }
-  }
 
   const handleRegenerate = async () => {
     setIsGenerating(true)
@@ -109,20 +86,6 @@ export const Message: FC<MessageProps> = ({
       true
     )
   }
-
-  const handleStartEdit = () => {
-    onStartEdit(message)
-  }
-
-  useEffect(() => {
-    setEditedMessage(message.content)
-
-    if (isEditing && editInputRef.current) {
-      const input = editInputRef.current
-      input.focus()
-      input.setSelectionRange(input.value.length, input.value.length)
-    }
-  }, [isEditing])
 
   const MODEL_DATA = [
     ...models.map(model => ({
@@ -177,16 +140,12 @@ export const Message: FC<MessageProps> = ({
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      onKeyDown={handleKeyDown}
     >
       <div className="relative flex w-full flex-col p-6 sm:w-[550px] sm:px-0 md:w-[650px] lg:w-[650px] xl:w-[700px]">
         <div className="absolute right-5 top-7 sm:right-0">
           <MessageActions
             onCopy={handleCopy}
-            onEdit={handleStartEdit}
-            isAssistant={message.role === "assistant"}
             isLast={isLast}
-            isEditing={isEditing}
             isHovering={isHovering}
             onRegenerate={handleRegenerate}
           />
@@ -266,14 +225,6 @@ export const Message: FC<MessageProps> = ({
                 }
               })()}
             </>
-          ) : isEditing ? (
-            <TextareaAutosize
-              textareaRef={editInputRef}
-              className="text-md"
-              value={editedMessage}
-              onValueChange={setEditedMessage}
-              maxRows={20}
-            />
           ) : (
             <MessageMarkdown content={message.content} />
           )}
@@ -374,17 +325,7 @@ export const Message: FC<MessageProps> = ({
             )
           })}
         </div>
-        {isEditing && (
-          <div className="mt-4 flex justify-center space-x-2">
-            <Button size="sm" onClick={handleSendEdit}>
-              Save & Send
-            </Button>
 
-            <Button size="sm" variant="outline" onClick={onCancelEdit}>
-              Cancel
-            </Button>
-          </div>
-        )}
       </div>
 
       {showImagePreview && selectedImage && (
