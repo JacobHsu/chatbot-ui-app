@@ -14,6 +14,12 @@ components/utility/global-state.tsx
 
 ### message
 
+#### useContext
+components/utility/global-state.tsx
+`ChatbotUIContext.Provider`
+
+message-markdown-memoized npm [react-markdown](https://www.npmjs.com/package/react-markdown/v/8.0.6)
+
 components/messages/message.tsx
 
 ```js

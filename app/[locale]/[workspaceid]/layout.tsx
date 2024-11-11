@@ -115,7 +115,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setChatSettings({
       model: (searchParams.get("model") ||
         workspace?.default_model ||
-        "gpt-3.5-turbo-1106") as LLMID, // gpt-3.5-turbo-1106 // gpt-4-1106-preview"
+        "llama3:latest") as LLMID, // gpt-3.5-turbo-1106 // gpt-4-1106-preview"
       prompt:
         workspace?.default_prompt ||
         "You are a friendly, helpful AI assistant.",
