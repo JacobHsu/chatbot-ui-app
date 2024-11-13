@@ -10,21 +10,6 @@ import {
 } from "@/components/ui/sheet"
 import { AssignWorkspaces } from "@/components/workspace/assign-workspaces"
 import { ChatbotUIContext } from "@/context/context"
-import {
-  createAssistantCollection,
-  deleteAssistantCollection,
-  getAssistantCollectionsByAssistantId
-} from "@/db/assistant-collections"
-import {
-  createAssistantFile,
-  deleteAssistantFile,
-  getAssistantFilesByAssistantId
-} from "@/db/assistant-files"
-import {
-  createAssistantTool,
-  deleteAssistantTool,
-  getAssistantToolsByAssistantId
-} from "@/db/assistant-tools"
 
 import { updateChat } from "@/db/chats"
 import {
@@ -95,7 +80,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     setPrompts,
     setFiles,
     setCollections,
-    setAssistants,
     setModels
   } = useContext(ChatbotUIContext)
 
@@ -192,21 +176,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
         await getCollectionFilesByCollectionId(collectionId)
       setStartingCollectionFiles(collectionFiles.files)
       setSelectedCollectionFiles([])
-    },
-    assistants: async (assistantId: string) => {
-      const assistantFiles = await getAssistantFilesByAssistantId(assistantId)
-      setStartingAssistantFiles(assistantFiles.files)
-
-      const assistantCollections =
-        await getAssistantCollectionsByAssistantId(assistantId)
-      setStartingAssistantCollections(assistantCollections.collections)
-
-      const assistantTools = await getAssistantToolsByAssistantId(assistantId)
-      setStartingAssistantTools(assistantTools.tools)
-
-      setSelectedAssistantFiles([])
-      setSelectedAssistantCollections([])
-      setSelectedAssistantTools([])
     },
     tools: null,
     models: null
