@@ -4,15 +4,13 @@ import { LLM_LIST } from "@/lib/models/llm/llm-list"
 import { cn } from "@/lib/utils"
 import {
   IconBolt,
-  IconCirclePlus,
   IconPlayerStopFilled,
   IconSend
 } from "@tabler/icons-react"
 
-import { FC, useContext, useEffect, useRef, useState } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
-import { Input } from "../ui/input"
 import { TextareaAutosize } from "../ui/textarea-autosize"
 import { ChatCommandInput } from "./chat-command-input"
 import { ChatFilesDisplay } from "./chat-files-display"
@@ -64,14 +62,12 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
   const { handleInputChange } = usePromptAndCommand()
 
-  const { filesToAccept, handleSelectDeviceFile } = useSelectFileHandler()
+  const { handleSelectDeviceFile } = useSelectFileHandler()
 
   const {
     setNewMessageContentToNextUserMessage,
     setNewMessageContentToPreviousUserMessage
   } = useChatHistoryHandler()
-
-  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setTimeout(() => {
@@ -192,26 +188,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         <div className="absolute bottom-[76px] left-0 max-h-[300px] w-full overflow-auto rounded-xl dark:border-none">
           <ChatCommandInput />
         </div>
-
-        <>
-          <IconCirclePlus
-            className="absolute bottom-[12px] left-3 cursor-pointer p-1 hover:opacity-50"
-            size={32}
-            onClick={() => fileInputRef.current?.click()}
-          />
-
-          {/* Hidden input to select files from device */}
-          <Input
-            ref={fileInputRef}
-            className="hidden"
-            type="file"
-            onChange={e => {
-              if (!e.target.files) return
-              handleSelectDeviceFile(e.target.files[0])
-            }}
-            accept={filesToAccept}
-          />
-        </>
 
         <TextareaAutosize
           textareaRef={chatInputRef}
