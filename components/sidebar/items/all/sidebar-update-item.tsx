@@ -101,24 +101,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
     CollectionFile[]
   >([])
 
-  // Assistants Render State
-  const [startingAssistantFiles, setStartingAssistantFiles] = useState<
-    Tables<"files">[]
-  >([])
-  const [startingAssistantCollections, setStartingAssistantCollections] =
-    useState<Tables<"collections">[]>([])
-  const [startingAssistantTools, setStartingAssistantTools] = useState<
-    Tables<"tools">[]
-  >([])
-  const [selectedAssistantFiles, setSelectedAssistantFiles] = useState<
-    Tables<"files">[]
-  >([])
-  const [selectedAssistantCollections, setSelectedAssistantCollections] =
-    useState<Tables<"collections">[]>([])
-  const [selectedAssistantTools, setSelectedAssistantTools] = useState<
-    Tables<"tools">[]
-  >([])
-
   useEffect(() => {
     if (isOpen) {
       const fetchData = async () => {
@@ -147,20 +129,6 @@ export const SidebarUpdateItem: FC<SidebarUpdateItemProps> = ({
       setStartingCollectionFiles,
       selectedCollectionFiles,
       setSelectedCollectionFiles
-    },
-    assistants: {
-      startingAssistantFiles,
-      setStartingAssistantFiles,
-      startingAssistantCollections,
-      setStartingAssistantCollections,
-      startingAssistantTools,
-      setStartingAssistantTools,
-      selectedAssistantFiles,
-      setSelectedAssistantFiles,
-      selectedAssistantCollections,
-      setSelectedAssistantCollections,
-      selectedAssistantTools,
-      setSelectedAssistantTools
     },
     tools: null,
     models: null
