@@ -77,9 +77,6 @@ export const Sidebar: FC<SidebarProps> = ({ contentType, showSidebar }) => {
                 collectionFolders
               )
 
-            case "models":
-              return renderSidebarContent("models", models, modelFolders)
-
             default:
               return null
           }

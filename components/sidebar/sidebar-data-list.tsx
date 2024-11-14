@@ -6,7 +6,7 @@ import { updateFile } from "@/db/files"
 import { updateModel } from "@/db/models"
 import { updatePreset } from "@/db/presets"
 import { updatePrompt } from "@/db/prompts"
-import { updateTool } from "@/db/tools"
+
 import { cn } from "@/lib/utils"
 import { Tables } from "@/supabase/types"
 import { ContentType, DataItemType, DataListType } from "@/types"
@@ -16,7 +16,6 @@ import { ChatItem } from "./items/chat/chat-item"
 import { CollectionItem } from "./items/collections/collection-item"
 import { FileItem } from "./items/files/file-item"
 import { Folder } from "./items/folders/folder-item"
-import { ModelItem } from "./items/models/model-item"
 import { PresetItem } from "./items/presets/preset-item"
 import { PromptItem } from "./items/prompts/prompt-item"
 interface SidebarDataListProps {
@@ -36,7 +35,6 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     setPrompts,
     setFiles,
     setCollections,
-    setAssistants,
     setModels
   } = useContext(ChatbotUIContext)
 
@@ -69,9 +67,6 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
             collection={item as Tables<"collections">}
           />
         )
-
-      case "models":
-        return <ModelItem key={item.id} model={item as Tables<"models">} />
 
       default:
         return null

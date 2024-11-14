@@ -4,5 +4,3 @@ export type ContentType =
   | "prompts"
   | "files"
   | "collections"
-  // | "tools"
-  | "models"

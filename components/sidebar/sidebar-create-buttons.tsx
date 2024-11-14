@@ -7,7 +7,6 @@ import { FC, useContext, useState } from "react"
 import { Button } from "../ui/button"
 import { CreateCollection } from "./items/collections/create-collection"
 import { CreateFile } from "./items/files/create-file"
-import { CreateModel } from "./items/models/create-model"
 import { CreatePreset } from "./items/presets/create-preset"
 import { CreatePrompt } from "./items/prompts/create-prompt"
 
@@ -28,8 +27,6 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
   const [isCreatingPreset, setIsCreatingPreset] = useState(false)
   const [isCreatingFile, setIsCreatingFile] = useState(false)
   const [isCreatingCollection, setIsCreatingCollection] = useState(false)
-  const [isCreatingTool, setIsCreatingTool] = useState(false)
-  const [isCreatingModel, setIsCreatingModel] = useState(false)
 
   const handleCreateFolder = async () => {
     if (!profile) return
@@ -71,11 +68,6 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
       case "collections":
         return async () => {
           setIsCreatingCollection(true)
-        }
-
-      case "models":
-        return async () => {
-          setIsCreatingModel(true)
         }
 
       default:
@@ -122,13 +114,7 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
           onOpenChange={setIsCreatingCollection}
         />
       )}
-
-      {isCreatingModel && (
-        <CreateModel
-          isOpen={isCreatingModel}
-          onOpenChange={setIsCreatingModel}
-        />
-      )}
+      
     </div>
   )
 }

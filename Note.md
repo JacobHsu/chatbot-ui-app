@@ -195,7 +195,7 @@ import { ToolPicker } from "./tool-picker"
 sidebar-switcher 側邊欄按鈕  
 sidebar renderSidebarContent 決定渲染的內容
 sidebar-create-buttons 白色按鈕 New XXX 的功能  
-sidebar-data-list sidebar/items/assistants 內容  
+sidebar-data-list `sidebar/items`/assistants 內容  
 
 
 ## supabase
