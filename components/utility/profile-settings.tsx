@@ -38,7 +38,7 @@ import {
 } from "../ui/sheet"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import { TextareaAutosize } from "../ui/textarea-autosize"
-import { WithTooltip } from "../ui/with-tooltip"
+
 import { ThemeSwitcher } from "./theme-switcher"
 
 interface ProfileSettingsProps {}
