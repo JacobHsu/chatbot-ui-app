@@ -1,17 +1,20 @@
 import { ChatbotUIContext } from "@/context/context"
 
+import {
+  PROFILE_DISPLAY_NAME_MAX
+} from "@/db/limits"
+import { updateProfile } from "@/db/profile"
 import { supabase } from "@/lib/supabase/browser-client"
 
-import {
-  IconLogout,
-  IconUser
-} from "@tabler/icons-react"
+import { IconLogout, IconUser } from "@tabler/icons-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { FC, useContext, useRef, useState } from "react"
+import { toast } from "sonner"
 import { SIDEBAR_ICON_SIZE } from "../sidebar/sidebar-switcher"
 import { Button } from "../ui/button"
-
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
 import {
   Sheet,
   SheetContent,
@@ -25,21 +28,35 @@ import { ThemeSwitcher } from "./theme-switcher"
 interface ProfileSettingsProps {}
 
 export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
-  const {
-    profile,
-  } = useContext(ChatbotUIContext)
+  const { profile, setProfile } = useContext(ChatbotUIContext)
 
   const router = useRouter()
 
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const [isOpen, setIsOpen] = useState(false)
+  const [displayName, setDisplayName] = useState(profile?.display_name || "")
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
     router.push("/login")
     router.refresh()
     return
+  }
+
+  const handleSave = async () => {
+    if (!profile) return
+
+    const updatedProfile = await updateProfile(profile.id, {
+      ...profile,
+      display_name: displayName
+    })
+
+    setProfile(updatedProfile)
+
+    toast.success("Profile updated!")
+
+    setIsOpen(false)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -90,6 +107,16 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
             </SheetTitle>
           </SheetHeader>
 
+          <div className="mt-2 space-y-2">
+            <Label>Chat Display Name</Label>
+
+            <Input
+              placeholder="Chat display name..."
+              value={displayName}
+              onChange={e => setDisplayName(e.target.value)}
+              maxLength={PROFILE_DISPLAY_NAME_MAX}
+            />
+          </div>
         </div>
 
         <div className="mt-6 flex items-center">
@@ -102,9 +129,9 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
               Cancel
             </Button>
 
-            {/* <Button ref={buttonRef} onClick={handleSave}>
+            <Button ref={buttonRef} onClick={handleSave}>
               Save
-            </Button> */}
+            </Button>
           </div>
         </div>
       </SheetContent>

@@ -10,7 +10,10 @@ components/utility/global-state.tsx
 
 /components/models/model-select.tsx Hosted Local 選單
 
-`const [tab, setTab] = useState<"hosted" | "local">("hosted")`
+`const [tab, setTab] = useState<"hosted" | "local">("hosted")`  
+
+
+components/chat/chat-ui.tsx `<ChatMessages />`
 
 ### message
 
