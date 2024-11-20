@@ -37,6 +37,7 @@ export const Message: FC<MessageProps> = ({
 }) => {
   const {
     profile,
+    setCopyMsg,
     isGenerating,
     setIsGenerating,
     firstTokenReceived,
@@ -66,6 +67,7 @@ export const Message: FC<MessageProps> = ({
   const handleCopy = () => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(message.content)
+      setCopyMsg(message.content)
     } else {
       const textArea = document.createElement("textarea")
       textArea.value = message.content

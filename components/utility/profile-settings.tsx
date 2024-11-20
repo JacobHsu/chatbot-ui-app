@@ -9,7 +9,7 @@ import { supabase } from "@/lib/supabase/browser-client"
 import { IconLogout, IconUser } from "@tabler/icons-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { FC, useContext, useRef, useState } from "react"
+import { FC, useContext, useRef, useEffect, useState } from "react"
 import { toast } from "sonner"
 import { SIDEBAR_ICON_SIZE } from "../sidebar/sidebar-switcher"
 import { Button } from "../ui/button"
@@ -36,7 +36,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [displayName, setDisplayName] = useState(profile?.display_name || "")
-  const [selecedMsg, setSelectedMsg] = useState<string>(copyMsg || "")
+  const [selecedMsg, setSelectedMsg] = useState(copyMsg || "")
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -55,7 +55,8 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
 
     setProfile(updatedProfile)
 
-    setCopyMsg(displayName)
+    setCopyMsg(selecedMsg)
+
 
     toast.success("Profile updated!")
 
@@ -69,6 +70,10 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
   }
 
   if (!profile) return null
+
+  useEffect(() => {
+    setSelectedMsg(copyMsg);
+  }, [copyMsg]);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
