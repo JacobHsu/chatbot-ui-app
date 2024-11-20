@@ -28,7 +28,7 @@ import { ThemeSwitcher } from "./theme-switcher"
 interface ProfileSettingsProps {}
 
 export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
-  const { profile, setProfile } = useContext(ChatbotUIContext)
+  const { profile, setProfile, copyMsg, setCopyMsg } = useContext(ChatbotUIContext)
 
   const router = useRouter()
 
@@ -36,6 +36,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [displayName, setDisplayName] = useState(profile?.display_name || "")
+  const [selecedMsg, setSelectedMsg] = useState<string>(copyMsg || "")
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -53,6 +54,8 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
     })
 
     setProfile(updatedProfile)
+
+    setCopyMsg(displayName)
 
     toast.success("Profile updated!")
 
@@ -114,6 +117,17 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
               placeholder="Chat display name..."
               value={displayName}
               onChange={e => setDisplayName(e.target.value)}
+              maxLength={PROFILE_DISPLAY_NAME_MAX}
+            />
+          </div>
+
+          <div className="mt-2 space-y-1">
+            <Label>Chat Selected Message</Label>
+
+            <Input
+              placeholder="Chat Selected Message..."
+              value={selecedMsg}
+              onChange={e => setSelectedMsg(e.target.value)}
               maxLength={PROFILE_DISPLAY_NAME_MAX}
             />
           </div>

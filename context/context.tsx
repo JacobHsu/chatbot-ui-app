@@ -17,6 +17,9 @@ interface ChatbotUIContext {
   profile: Tables<"profiles"> | null
   setProfile: Dispatch<SetStateAction<Tables<"profiles"> | null>>
 
+  copyMsg: string
+  setCopyMsg: Dispatch<SetStateAction<string>>
+
   // ITEMS STORE
   assistants: Tables<"assistants">[]
   setAssistants: Dispatch<SetStateAction<Tables<"assistants">[]>>
@@ -132,6 +135,8 @@ export const ChatbotUIContext = createContext<ChatbotUIContext>({
   // PROFILE STORE
   profile: null,
   setProfile: () => {},
+  copyMsg: "",
+  setCopyMsg: () => {},
 
   // ITEMS STORE
   assistants: [],
