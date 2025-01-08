@@ -118,6 +118,14 @@ brew install supabase/tap/supabase
 
 **Windows**
 
+無法辨識 scoop 命令
+
+```bash
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+iwr -useb get.scoop.sh | iex
+```
+
+
 ```bash
 scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
 scoop install supabase
